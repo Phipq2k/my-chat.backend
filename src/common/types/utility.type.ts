@@ -1,0 +1,1 @@
+export declare type Projection<T> = Record<string, unknown> & Partial<T>; 
