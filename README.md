@@ -1,10 +1,7 @@
-<style>
-  h3{color: #46A8Df}
-  a{color: #fff}
-</style>
-<h3 align="center">
+
+<h1 style="color: #46A8Df" align="center">
 My Chat Backend
-</h3>
+</h1>
 
 <img src="./public/images/logo.png" width="320" alt="Nest Logo" />| <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 :-------------------------:|:-------------------------:
