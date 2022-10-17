@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import { FilterQuery } from 'mongoose';
 import { UserRepoSitory } from './user.repository';
@@ -7,6 +7,13 @@ import { User } from './user.schema';
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepoSitory) {}
+
+
+  public async checkExistAccount(user_email: string): Promise<boolean> {
+    const existUser = await this.getUser({user_email});
+    if(existUser) return true;
+    return false;
+  }
 
   public async getUserById(userId: string): Promise<User> {
     return await this.userRepository.findOne({ _id: userId });
@@ -46,6 +53,10 @@ export class UserService {
     userFilterQuery: FilterQuery<User>,
     data: Partial<User>,
   ): Promise<User> {
+    if(data.user_email){
+      const existUser = await this.checkExistAccount(data.user_email);
+      if(existUser) throw new ForbiddenException('Email đã được sử dụng cho tài khoản khác');
+    }
     return await this.userRepository.updateOne(userFilterQuery, data);
   }
 
