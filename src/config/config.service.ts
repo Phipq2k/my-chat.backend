@@ -7,7 +7,7 @@ export class ConfigCustomService extends ConfigService{
     }
 
     public getPortConfig(): number {
-        return this.get<number>('APP_PORT');
+        return this.get<number>('PORT');
     }
 
     public uploadFileDestination(): string{

@@ -20,23 +20,6 @@ export class AppController {
     return this.appService.getHello(res);
   }
 
-  //Avatar file upload
-  // @UseInterceptors(LocalFilesInterceptor({
-  //   fieldName: 'upload',
-  //   path: '/avatar'
-  // }))
-  // @Post('/upload-file/avatar')
-  // public uploadFile(@UploadedFile() file: Express.Multer.File){
-  //   return file;
-  // }
-
-  // //Avatar file path response
-  // @Get('avatar/:imgPath')
-  // public responseFileUrl(@Param('imgPath') image: string, @Res() res: Response){
-  //   return res.sendFile(image, {
-  //     root: 'assets/avatar'
-  //   });
-  // }
 
 
 }

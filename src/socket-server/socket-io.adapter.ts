@@ -15,7 +15,7 @@ export class SocketIoAdapter extends IoAdapter {
 
   createIOServer(port: number, options?: ServerOptions) {
     const clientPort = this.configService.get<number>('CLIENT_PORT');
-    const socketPort = this.configService.get<number>('SOCKETIO.SERVER.PORT');
+    const socketPort = this.configService.get<number>('SOCKETIO_SERVER_PORT');
     const cors = {
       origin: [
         `http://localhost:${clientPort}`,

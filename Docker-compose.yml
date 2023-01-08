@@ -1,8 +1,8 @@
-version: "3.0"
+version: "3.8"
 services:
   elasticsearch:
     container_name: es-container
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3@sha256:c9b454f73b1e2365d43f1f46f1b9464b981e5f98c1dd46fee01dbd5a4a446973
     environment:
       - xpack.security.enabled=false
       - "discovery.type=single-node"
@@ -12,7 +12,7 @@ services:
       - 9200:9200
   kibana:
     container_name: kb-container
-    image: docker.elastic.co/kibana/kibana:7.11.0
+    image: docker.elastic.co/kibana/kibana:8.5.3@sha256:0e0c24b02312d0b7505f731bfff08beb69c236c002df63e90bb16cff4ba61266
     environment:
       - ELASTICSEARCH_HOSTS=http://es-container:9200
     networks:
@@ -21,6 +21,55 @@ services:
       - elasticsearch
     ports:
       - 5601:5601
+  app:
+    container_name: backend-container
+    image: mychat-backend
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment: 
+      - DB_HOST=${DB_HOST}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - CLIENT_PORT=${CLIENT_PORT}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - ACCESS_TOKEN_EXPIRESIN=${ACCESS_TOKEN_EXPIRESIN}
+      - REFRESH_TOKEN_EXPIRESIN=${REFRESH_TOKEN_EXPIRESIN}
+      - UPLOADED_FILES_DESTINATION=${UPLOADED_FILES_DESTINATION}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_FROM=${MAIL_FROM}
+      - SOCKETIO_SERVER_PORT=${SOCKETIO_SERVER_PORT}
+      - SOCKETIO_SERVER_PATH=${SOCKETIO_SERVER_PATH}
+      - SOCKETIO_SERVER_CORS_ORIGIN=${SOCKETIO_SERVER_CORS_ORIGIN}
+      - ELASTICSEARCH_NODE=${ELASTICSEARCH_NODE}
+      - ELASTICSEARCH_INDEX=${ELASTICSEARCH_INDEX}
+      - SWAGGER_USER=${SWAGGER_USER}
+      - SWAGGER_PASSWORD=${SWAGGER_PASSWORD}
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
+    depends_on:
+        - redis
+        - db
+  
+  db:
+    container_name: mongodb-container
+    image: mongo:4.4
+    volumes:
+      - .docker/data/db:/data/db
+    restart: unless-stopped
+  
+  redis:
+    container_name: redis-container
+    image: redis:5-alpine
+    volumes:
+      - .docker/data/redis:/data
+    restart: unless-stopped
 networks:
   es-net:
     driver: bridge

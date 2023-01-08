@@ -40,7 +40,7 @@ export abstract class MongodbRepository<T> {
 
   public async updateOne(
     query: FilterQuery<T>,
-    updateEntityData: UpdateQuery<T>,
+    updateEntityData: UpdateQuery<T & Document>,
     options?: QueryOptions<T>,
   ): Promise<T> {
     return await this.entityModel.findOneAndUpdate(
