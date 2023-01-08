@@ -55,3 +55,10 @@ $ yarn dev
 # production mode
 $ yarn start:prod
 ```
+## Tạo và khởi chạy với docker
+
+```bash
+$ docker build -t mychat-backend
+$ docker compose up -d
+```
+
