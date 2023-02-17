@@ -31,7 +31,7 @@ My Chat Backend
 
 ## Mô tả
 
-[Nest](https://github.com/nestjs/nest) framework trong My Chat Backend sử dụng TypeScript để xây dựng Nest CLI.
+[Nest](https://github.com/nestjs/nest) framework trong My Chat Backend sử dụng TypeScript để xây dựng App.
 
 ## Yêu cầu
 - Node: v14.17.1
